@@ -63,6 +63,11 @@ public class RunnerTest {
             int exceptedAge = Integer.parseInt(item[1]);
             String exceptedName = item[2];
             log.info("Running Test Tag: " + exceptedPid + " " + exceptedName + " " + exceptedAge);
+
+            mysqlDeleteTagStmt.setString(1, exceptedPid);
+            mysqlDeleteTagStmt.executeUpdate();
+            Thread.sleep(1000L);
+
             mysqlInsertTagStmt.setString(1, exceptedPid);
             mysqlInsertTagStmt.setString(2, exceptedName);
             mysqlInsertTagStmt.setInt(3, exceptedAge);
@@ -71,7 +76,7 @@ public class RunnerTest {
             Thread.sleep(1000L);
             ResultSet insertResultSet = tagQuery.executeQuery();
             assertNotNull(insertResultSet);
-//            assertTrue(insertResultSet.next());
+            assertTrue(insertResultSet.next());
             assertEquals(exceptedAge, insertResultSet.getInt("pAge"));
             assertEquals(exceptedName, insertResultSet.getString("pName"));
 
@@ -103,6 +108,11 @@ public class RunnerTest {
             String exceptedSrcPid = item[0];
             String exceptedDstPid = item[1];
             int exceptedDegree = Integer.parseInt(item[2]);
+
+            mysqlDeleteEdgeStmt.setString(1, exceptedSrcPid);
+            mysqlDeleteEdgeStmt.setString(2, exceptedDstPid);
+            mysqlDeleteEdgeStmt.executeUpdate();
+            Thread.sleep(1000L);
 
             mysqlInsertTagStmt.setString(1,exceptedSrcPid);
             mysqlInsertTagStmt.setString(2, "exceptedName");
